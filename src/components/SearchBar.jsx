@@ -1,10 +1,18 @@
-export default function SearchBar() {
+import PropTypes from "prop-types";
+
+function SearchBar({ search, setSearch }) {
+  const handleChange = (event) => {
+    setSearch(event.target.value);
+  };
+
   return (
     <div className="text-center w-full mt-10">
-      <div className="relative w-1/3 mx-auto">
+      <div className="relative w-1/3 min-w-72 mx-auto">
         <input
           type="search"
-          placeholder="Pesquise o título de um livro..."
+          value={search}
+          placeholder="Pesquise um título ou autor..."
+          onChange={handleChange}
           aria-label="Search"
           className="w-full h-9 rounded-lg pl-4 pr-10 bg-stone-300 brightness-85 text-xl"
         />
@@ -29,3 +37,10 @@ export default function SearchBar() {
     </div>
   );
 }
+
+SearchBar.propTypes = {
+  search: PropTypes.string.isRequired,
+  setSearch: PropTypes.func.isRequired,
+};
+
+export default SearchBar;
