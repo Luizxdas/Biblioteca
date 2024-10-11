@@ -7,7 +7,7 @@ function SearchBar({ search, setSearch }) {
 
   return (
     <div className="text-center w-full mt-10">
-      <div className="relative w-1/3 min-w-72 mx-auto">
+      <div className="relative w-1/3 min-w-80 mx-auto">
         <input
           type="search"
           value={search}

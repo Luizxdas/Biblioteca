@@ -26,7 +26,7 @@ function Books({ search }) {
   }
 
   return (
-    <div className="grid grid-cols-5 gap-24">
+    <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-5 md:gap-x-32">
       {books
         .filter((book) => {
           return search.toLowerCase() === ""
@@ -40,7 +40,7 @@ function Books({ search }) {
               <img
                 src={book.image}
                 alt="Imagem de capa do livro"
-                className="w-52 h-80 min-w-32"
+                className="w-44 h-72 md:w-52 md:h-80"
               />
               <h1 className="text-center text-lg font-medium mt-2">
                 {book.title}
