@@ -3,6 +3,7 @@ import Title from "./components/Title";
 import SearchBar from "./components/SearchBar";
 import FilterButton from "./components/FilterButton";
 import { useState } from "react";
+import OrderButton from "./components/OrderButton";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -14,11 +15,14 @@ function App() {
       <div className="flex flex-col items-center mt-8">
         <Title />
         <SearchBar search={search} setSearch={setSearch} />
-        <FilterButton
-          genres={genres}
-          selectedGenres={selectedGenres}
-          setSelectedGenres={setSelectedGenres}
-        />
+        <div>
+          <FilterButton
+            genres={genres}
+            selectedGenres={selectedGenres}
+            setSelectedGenres={setSelectedGenres}
+          />
+          <OrderButton />
+        </div>
         <Books
           search={search}
           setGenres={setGenres}

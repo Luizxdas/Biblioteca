@@ -26,7 +26,7 @@ function FilterButton({ genres, selectedGenres = [], setSelectedGenres }) {
   // Clicar fora fecha os gêneros.
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (!event.target.closest(".dropdown")) {
+      if (!event.target.closest(".dropGenre")) {
         setIsOpen(false);
       }
     };
@@ -38,7 +38,7 @@ function FilterButton({ genres, selectedGenres = [], setSelectedGenres }) {
   }, []);
 
   return (
-    <div className="relative inline-block dropdown">
+    <div className="relative inline-block dropGenre">
       <button
         onClick={toggleDropdown}
         className="bg-stone-300 text-gray-700 px-4 py-2 rounded-md focus:outline-none"
@@ -46,7 +46,7 @@ function FilterButton({ genres, selectedGenres = [], setSelectedGenres }) {
         Gêneros
       </button>
       {isOpen && (
-        <div className="absolute mt-2 w-48 bg-stone-300 shadow-md rounded-md p-2">
+        <div className="absolute mt-2 left-1/2 transform -translate-x-1/2 w-48 bg-stone-300 shadow-md rounded-md p-2">
           {genres.map((genre) => (
             <div key={genre} className="flex items-center mb-2">
               <input
