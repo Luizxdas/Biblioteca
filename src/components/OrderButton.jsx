@@ -1,14 +1,23 @@
+import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 
-function OrderButton() {
+function OrderButton({ setBooksOrder }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Fechar/Abrir as opções.
+  {
+    /* Fecha/abre as opções. */
+  }
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
-  // Clicar fora fecha as opções.
+  const handleOrderChange = (event) => {
+    setBooksOrder(event.target.name);
+  };
+
+  {
+    /* Clicar fora da div de opções fecha ela. */
+  }
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!event.target.closest(".dropOrder")) {
@@ -33,15 +42,27 @@ function OrderButton() {
       {isOpen && (
         <div className="absolute mt-2 left-1/2 transform -translate-x-1/2 w-48 bg-stone-300 shadow-md rounded-md p-2">
           <div className="flex flex-col">
-            <button>Nome</button>
-            <button>Gênero</button>
-            <button>Autor</button>
-            <button>Data</button>
+            <button name="name" onClick={handleOrderChange}>
+              Nome
+            </button>
+            <button name="genre" onClick={handleOrderChange}>
+              Gênero
+            </button>
+            <button name="author" onClick={handleOrderChange}>
+              Autor
+            </button>
+            <button name="date" onClick={handleOrderChange}>
+              Data
+            </button>
           </div>
         </div>
       )}
     </div>
   );
 }
+
+OrderButton.propTypes = {
+  setBooksOrder: PropTypes.func,
+};
 
 export default OrderButton;

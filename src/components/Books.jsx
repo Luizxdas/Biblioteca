@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 
-function Books({ search, setGenres, selectedGenres }) {
+function Books({ search, setGenres, selectedGenres, booksOrder }) {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Conectar a API, salvar os dados (setBooks) e os gêneros (setGenres).
+  {
+    /*  Conecta a API, salva os dados (setBooks) e os gêneros (setGenres). */
+  }
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -31,12 +33,14 @@ function Books({ search, setGenres, selectedGenres }) {
     return <div>Carregando...</div>;
   }
 
-  // Filtrar os livros caso o usuário pesquise algo e/ou filtre gêneros e depois mapear cada livro como uma lista.
   return (
     <div>
       <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-5 md:gap-x-32">
         {books
           .filter((book) => {
+            {
+              /* Filtra os livros com base na pesquisa e/ou gênero. */
+            }
             const matchesSearch =
               search === "" ||
               book.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -48,7 +52,27 @@ function Books({ search, setGenres, selectedGenres }) {
 
             return matchesSearch && matchesGenre;
           })
+          .sort((a, b) => {
+            {
+              /* Ordena os livros com base na ordem especificada em booksOrder. */
+            }
+            switch (booksOrder) {
+              case "author":
+                return a.author.localeCompare(b.author);
+              case "genre":
+                return a.genre.localeCompare(b.genre);
+              case "name":
+                return a.title.localeCompare(b.title);
+              case "date":
+                return new Date(a.date) - new Date(b.date);
+              default:
+                return 0;
+            }
+          })
           .map((book) => {
+            {
+              /* Mapeia cada livro para um elemento de lista. */
+            }
             return (
               <li key={book.id} className="list-none">
                 <img
@@ -74,6 +98,7 @@ Books.propTypes = {
   search: PropTypes.string.isRequired,
   setGenres: PropTypes.func.isRequired,
   selectedGenres: PropTypes.array,
+  booksOrder: PropTypes.string,
 };
 
 export default Books;

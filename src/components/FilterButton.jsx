@@ -4,12 +4,16 @@ import PropTypes from "prop-types";
 function FilterButton({ genres, selectedGenres = [], setSelectedGenres }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Fechar/Abrir os gêneros.
+  {
+    /* Fecha/abre opções de gêneros. */
+  }
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
-  // Checar se o gênero está marcado e inserir na lista de marcados.
+  {
+    /* Checa se o gênero está marcado e insere na lista de marcados */
+  }
   const handleGenreChange = (event) => {
     const { value, checked } = event.target;
     let updatedGenres;
@@ -23,7 +27,9 @@ function FilterButton({ genres, selectedGenres = [], setSelectedGenres }) {
     setSelectedGenres(updatedGenres);
   };
 
-  // Clicar fora fecha os gêneros.
+  {
+    /* Clicar fora da div de opções fecha os ela. */
+  }
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!event.target.closest(".dropGenre")) {

@@ -9,6 +9,7 @@ function App() {
   const [search, setSearch] = useState("");
   const [genres, setGenres] = useState("");
   const [selectedGenres, setSelectedGenres] = useState([]);
+  const [booksOrder, setBooksOrder] = useState("");
 
   return (
     <div>
@@ -21,12 +22,13 @@ function App() {
             selectedGenres={selectedGenres}
             setSelectedGenres={setSelectedGenres}
           />
-          <OrderButton />
+          <OrderButton setBooksOrder={setBooksOrder} />
         </div>
         <Books
           search={search}
           setGenres={setGenres}
           selectedGenres={selectedGenres}
+          booksOrder={booksOrder}
         />
       </div>
     </div>
