@@ -4,6 +4,7 @@ import SearchBar from "./components/SearchBar";
 import FilterButton from "./components/FilterButton";
 import { useState } from "react";
 import OrderButton from "./components/OrderButton";
+import Register from "./components/Register";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -13,10 +14,13 @@ function App() {
 
   return (
     <div>
+      <div>
+        <Register />
+      </div>
       <div className="flex flex-col items-center mt-8">
         <Title />
         <SearchBar search={search} setSearch={setSearch} />
-        <div>
+        <div className="mt-1 mb-5">
           <FilterButton
             genres={genres}
             selectedGenres={selectedGenres}
