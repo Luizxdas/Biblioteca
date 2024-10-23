@@ -28,7 +28,7 @@ function FilterButton({ genres, selectedGenres = [], setSelectedGenres }) {
   };
 
   {
-    /* Clicar fora da div de opções fecha os ela. */
+    /* Clicar fora da div de opções fecha ela. */
   }
   useEffect(() => {
     const handleClickOutside = (event) => {
