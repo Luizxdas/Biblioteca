@@ -5,6 +5,7 @@ import FilterButton from "./components/FilterButton";
 import { useState } from "react";
 import OrderButton from "./components/OrderButton";
 import Register from "./components/Register";
+import Login from "./components/Login";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -14,8 +15,13 @@ function App() {
 
   return (
     <div>
-      <div>
-        <Register />
+      <div className="flex m-3 justify-end">
+        <div className="p-1">
+          <Register />
+        </div>
+        <div className="p-1">
+          <Login />
+        </div>
       </div>
       <div className="flex flex-col items-center mt-8">
         <Title />
