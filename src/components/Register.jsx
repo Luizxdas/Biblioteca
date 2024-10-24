@@ -33,7 +33,7 @@ function Register() {
         onClick={toggleDropdown}
         className="bg-stone-300 text-gray-700 px-4 py-2 rounded-md focus:outline-none"
       >
-        Register
+        Criar Conta
       </button>
       {/* Overlay */}
       {isOpen && (
