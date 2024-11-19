@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
-import axios from "axios";
 import AuthContext from "./AuthContext";
+import { useState } from "react";
+import { api } from "../apiService";
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -13,8 +13,8 @@ export const AuthProvider = ({ children }) => {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:8081/register",
+      const response = await api.post(
+        "/register",
         { email, username, password },
         {
           headers: {
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
   // Função de Login
   const login = async (username, password) => {
     try {
-      await axios.post("http://localhost:8081/login", {
+      await api.post("/login", {
         username,
         password,
       });

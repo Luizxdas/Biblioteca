@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { fetchBooks } from "../api/apiService";
 import PropTypes from "prop-types";
 
 function Books({ search, setGenres, selectedGenres, booksOrder }) {
@@ -7,27 +7,11 @@ function Books({ search, setGenres, selectedGenres, booksOrder }) {
   const [loading, setLoading] = useState(true);
 
   {
-    /*  Conecta a API, salva os dados (setBooks) e os gêneros (setGenres). */
+    /*  Busca os livros. */
   }
   useEffect(() => {
-    const fetchBooks = async () => {
-      try {
-        const response = await axios.get("http://localhost:8081/books");
-        setBooks(response.data);
-        setLoading(false);
-
-        const uniqueGenres = [
-          ...new Set(response.data.map((book) => book.genre)),
-        ];
-        setGenres(uniqueGenres);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
-    };
-
-    fetchBooks();
-  }, [setGenres]);
+    fetchBooks(setBooks, setLoading, setGenres);
+  }, [setBooks, setLoading, setGenres]);
 
   if (loading) {
     return <div>Carregando...</div>;
@@ -80,10 +64,10 @@ function Books({ search, setGenres, selectedGenres, booksOrder }) {
                   alt="Imagem de capa do livro"
                   className="w-44 h-72 md:w-52 md:h-80"
                 />
-                <h1 className="text-center text-lg font-medium mt-2">
+                <h1 className="mt-2 text-lg font-medium text-center">
                   {book.title}
                 </h1>
-                <h2 className="text-center text-sm font-medium">
+                <h2 className="text-sm font-medium text-center">
                   {book.author}
                 </h2>
               </li>
