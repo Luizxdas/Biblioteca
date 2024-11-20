@@ -43,6 +43,9 @@ export const AuthProvider = ({ children }) => {
 
   // Função de Login
   const login = async (username, password) => {
+    if (!username || !password) {
+      return { error: "Todos os campos são obrigatórios." };
+    }
     try {
       await api.post("/login", {
         username,
