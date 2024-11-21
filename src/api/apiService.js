@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useAuth } from "./auth/useAuth";
 
 export const api = axios.create({
   baseURL: "http://localhost:8081",
@@ -20,3 +21,30 @@ export const fetchBooks = async (setBooks, setLoading, setGenres) => {
     setLoading(false);
   }
 };
+
+{
+  /*  Intercepta e trata o erro 401. */
+}
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    if (error.response && error.response.status === 401) {
+      try {
+        const { checkLoginStatus } = useAuth();
+        await checkLoginStatus();
+
+        return axios();
+      } catch (refreshError) {
+        console.log("Refresh token inválido, deslogando...");
+        window.location.href = "/?login=true"; // Ou use React Router: history.push('/login');
+        return Promise.reject(refreshError);
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+export default api;

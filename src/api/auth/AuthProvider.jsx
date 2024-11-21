@@ -1,12 +1,18 @@
 import PropTypes from "prop-types";
 import AuthContext from "./AuthContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api } from "../apiService";
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Função de Registro
+  useEffect(() => {
+    const username = localStorage.getItem("username");
+    if (username) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   const register = async (email, username, password) => {
     if (!email || !username || !password) {
       return { error: "Todos os campos são obrigatórios." };
@@ -14,7 +20,7 @@ export const AuthProvider = ({ children }) => {
 
     try {
       const response = await api.post(
-        "/register",
+        "/auth/register",
         { email, username, password },
         {
           headers: {
@@ -41,26 +47,81 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Função de Login
   const login = async (username, password) => {
     if (!username || !password) {
       return { error: "Todos os campos são obrigatórios." };
     }
     try {
-      await api.post("/login", {
-        username,
-        password,
-      });
+      const response = await api.post(
+        "/auth/login",
+        {
+          username,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       setIsLoggedIn(true);
+      localStorage.setItem("username", username);
+
+      return {
+        success: true,
+        data: response.data,
+      };
     } catch (error) {
-      console.error("Erro ao fazer login:", error);
+      const status = error.response ? error.response.status : null;
+      const errorMessage = error.response
+        ? error.response.data
+        : "Erro desconhecido ao fazer login";
+
+      console.error("Erro ao fazer login:", errorMessage);
+      setIsLoggedIn(false);
+      return {
+        success: false,
+        error: errorMessage,
+        statusCode: status,
+      };
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await api.post("/auth/logout");
+      localStorage.removeItem("username");
+      setIsLoggedIn(false);
+    } catch (error) {
+      const status = error.response ? error.response.status : null;
+      const errorMessage = error.response
+        ? error.response.data
+        : "Erro desconhecido ao fazer logout";
+
+      console.error("Erro ao fazer logout:", errorMessage);
+      return {
+        success: false,
+        error: errorMessage,
+        statusCode: status,
+      };
+    }
+  };
+
+  const checkLoginStatus = async () => {
+    try {
+      const response = await api.post("/auth/refresh");
+      setIsLoggedIn(response.data.isLoggedIn);
+    } catch (error) {
+      console.error("Erro ao verificar status de login:", error);
       setIsLoggedIn(false);
     }
   };
 
   return (
-    <AuthContext.Provider value={{ register, login, isLoggedIn }}>
+    <AuthContext.Provider
+      value={{ register, checkLoginStatus, login, logout, isLoggedIn }}
+    >
       {children}
     </AuthContext.Provider>
   );
