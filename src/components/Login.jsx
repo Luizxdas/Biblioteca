@@ -45,12 +45,9 @@ function Login() {
     const result = await login(username, password);
 
     if (result.success) {
-      alert("Conta criada com sucesso!");
+      alert("Login feito com sucesso!");
     } else {
       switch (result.statusCode) {
-        case 409:
-          alert("Erro: Conta já existe.");
-          break;
         case 400:
           alert("Erro: Dados inválidos.");
           break;
