@@ -6,12 +6,15 @@ function Books({ search, setGenres, selectedGenres, booksOrder }) {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  {
-    /*  Busca os livros. */
-  }
   useEffect(() => {
-    fetchBooks(setBooks, setLoading, setGenres);
-  }, [setBooks, setLoading, setGenres]);
+    fetchBooks()
+      .then(({ books, genres }) => {
+        setBooks(books);
+        setGenres(genres);
+      })
+      .catch((err) => console.error("Erro ao buscar livros:", err))
+      .finally(() => setLoading(false));
+  }, [setGenres]);
 
   if (loading) {
     return <div>Carregando...</div>;
@@ -22,9 +25,6 @@ function Books({ search, setGenres, selectedGenres, booksOrder }) {
       <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-5 md:gap-x-32">
         {books
           .filter((book) => {
-            {
-              /* Filtra os livros com base na pesquisa e/ou gênero. */
-            }
             const matchesSearch =
               search === "" ||
               book.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -37,9 +37,6 @@ function Books({ search, setGenres, selectedGenres, booksOrder }) {
             return matchesSearch && matchesGenre;
           })
           .sort((a, b) => {
-            {
-              /* Ordena os livros com base na ordem especificada em booksOrder. */
-            }
             switch (booksOrder) {
               case "author":
                 return a.author.localeCompare(b.author);
@@ -53,26 +50,19 @@ function Books({ search, setGenres, selectedGenres, booksOrder }) {
                 return 0;
             }
           })
-          .map((book) => {
-            {
-              /* Mapeia cada livro para um elemento de lista. */
-            }
-            return (
-              <li key={book.id} className="list-none">
-                <img
-                  src={book.image}
-                  alt="Imagem de capa do livro"
-                  className="w-44 h-72 md:w-52 md:h-80"
-                />
-                <h1 className="mt-2 text-lg font-medium text-center">
-                  {book.title}
-                </h1>
-                <h2 className="text-sm font-medium text-center">
-                  {book.author}
-                </h2>
-              </li>
-            );
-          })}
+          .map((book) => (
+            <li key={book.id} className="list-none">
+              <img
+                src={book.image}
+                alt="Imagem de capa do livro"
+                className="w-44 h-72 md:w-52 md:h-80"
+              />
+              <h1 className="mt-2 text-lg font-medium text-center">
+                {book.title}
+              </h1>
+              <h2 className="text-sm font-medium text-center">{book.author}</h2>
+            </li>
+          ))}
       </div>
     </div>
   );
