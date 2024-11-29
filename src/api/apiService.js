@@ -6,38 +6,58 @@ export const api = axios.create({
   baseURL: "https://localhost:8081",
 });
 
-export const refreshToken = async () => {
-  try {
-    const response = await api.post("/auth/refresh");
-    if (response.status === 200) {
-      return true;
-    } else if (response.status === 400) {
-      throw new Error(
-        "Falha ao obter refresh token: refresh_token não encontrado."
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      console.warn(
+        "Não autorizado: Usuário não autenticado ou sessão expirada."
       );
+      return Promise.resolve(null);
+    } else if (error.response && error.response.status === 400) {
+      console.warn(
+        "Não autenticado: Usuário não autenticado ou token não encontrado."
+      );
+      return Promise.resolve(null);
     } else {
-      throw new Error("Erro desconhecido ao obter refresh token");
+      console.error("Erro inesperado:", error);
+      return Promise.reject(error);
     }
+  }
+);
+
+export const refreshToken = async () => {
+  const response = await api.post("/auth/refresh");
+  return response ? true : false;
+};
+
+export const fetchUserData = async () => {
+  try {
+    const response = await api.get("/user");
+    return response.data;
   } catch (error) {
-    console.error("Erro no refreshToken:", error);
+    if (error.response && error.response.status === 401) {
+      return null;
+    }
+    console.error(error);
     throw error;
   }
 };
 
-export const fetchBooks = async (setBooks, setLoading, setGenres) => {
+export const fetchBooks = async () => {
   try {
     const response = await api.get("/books");
-    setBooks(response.data);
-    setLoading(false);
+    const books = response.data;
 
-    const uniqueGenres = [...new Set(response.data.map((book) => book.genre))];
-    setGenres(uniqueGenres);
+    const uniqueGenres = [...new Set(books.map((book) => book.genre))];
+
+    return { books, genres: uniqueGenres };
   } catch (error) {
     if (error.response && error.response.status === 401) {
-      return;
+      return null;
     }
     console.error(error);
-    setLoading(false);
+    throw error;
   }
 };
 
