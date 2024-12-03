@@ -1,14 +1,13 @@
 import { Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./api/auth/AuthProvider";
 import Home from "./Home";
+import Book from "./components/Book";
 
 function App() {
   return (
-    <AuthProvider>
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </AuthProvider>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/books/:id" element={<Book />} />
+    </Routes>
   );
 }
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { fetchBooks } from "../api/apiService";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 function Books({ search, setGenres, selectedGenres, booksOrder }) {
   const [books, setBooks] = useState([]);
@@ -52,15 +53,19 @@ function Books({ search, setGenres, selectedGenres, booksOrder }) {
           })
           .map((book) => (
             <li key={book.id} className="list-none">
-              <img
-                src={book.image}
-                alt="Imagem de capa do livro"
-                className="w-44 h-72 md:w-52 md:h-80"
-              />
-              <h1 className="mt-2 text-lg font-medium text-center">
-                {book.title}
-              </h1>
-              <h2 className="text-sm font-medium text-center">{book.author}</h2>
+              <Link to={`/books/${book.id}`} className="block">
+                <img
+                  src={book.image}
+                  alt="Imagem de capa do livro"
+                  className="w-44 h-72 md:w-52 md:h-80"
+                />
+                <h1 className="mt-2 text-lg font-medium text-center">
+                  {book.title}
+                </h1>
+                <h2 className="text-sm font-medium text-center">
+                  {book.author}
+                </h2>
+              </Link>
             </li>
           ))}
       </div>
