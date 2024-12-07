@@ -11,14 +11,16 @@ function Books({ search, setGenres, selectedGenres, booksOrder }) {
     fetchBooks()
       .then(({ books, genres }) => {
         setBooks(books);
-        setGenres(genres);
+        const uniqueGenres = [...new Set(genres)];
+
+        setGenres(uniqueGenres);
       })
       .catch((err) => console.error("Erro ao buscar livros:", err))
       .finally(() => setLoading(false));
   }, [setGenres]);
 
   if (loading) {
-    return <div>Carregando...</div>;
+    return <div>Loading...</div>;
   }
 
   return (
@@ -31,18 +33,18 @@ function Books({ search, setGenres, selectedGenres, booksOrder }) {
               book.title.toLowerCase().includes(search.toLowerCase()) ||
               book.author.toLowerCase().includes(search.toLowerCase());
 
-            const matchesGenre =
+            const matchesGenres =
               selectedGenres.length === 0 ||
-              selectedGenres.some((genre) => book.genre.includes(genre));
+              selectedGenres.some((genre) => book.genres[0] === genre);
 
-            return matchesSearch && matchesGenre;
+            return matchesSearch && matchesGenres;
           })
           .sort((a, b) => {
             switch (booksOrder) {
               case "author":
                 return a.author.localeCompare(b.author);
               case "genre":
-                return a.genre.localeCompare(b.genre);
+                return a.genres[0].localeCompare(b.genres[0]);
               case "name":
                 return a.title.localeCompare(b.title);
               case "date":
@@ -57,7 +59,7 @@ function Books({ search, setGenres, selectedGenres, booksOrder }) {
                 <img
                   src={book.image}
                   alt="Imagem de capa do livro"
-                  className="w-44 h-72 md:w-52 md:h-80"
+                  className="rounded-lg h-52 w-44 md:w-52 md:h-80"
                 />
                 <h1 className="mt-2 text-lg font-medium text-center">
                   {book.title}
