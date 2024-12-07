@@ -9,7 +9,7 @@ export const fetchBooks = async () => {
     const response = await api.get("/books");
     const books = response.data;
 
-    const uniqueGenres = [...new Set(books.map((book) => book.genre))];
+    const uniqueGenres = [...new Set(books.flatMap((book) => book.genres))];
 
     return { books, genres: uniqueGenres };
   } catch (error) {
@@ -24,6 +24,21 @@ export const fetchBook = async (id) => {
     const book = response.data;
 
     return book;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      return null;
+    }
+    console.error(error);
+    throw error;
+  }
+};
+
+export const fetchCredits = async (id) => {
+  try {
+    const response = await api.get(`/books/credits/${id}`);
+    const credits = response.data;
+
+    return credits;
   } catch (error) {
     if (error.response && error.response.status === 401) {
       return null;
