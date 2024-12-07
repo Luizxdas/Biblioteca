@@ -12,8 +12,8 @@ function Home() {
   const [booksOrder, setBooksOrder] = useState("");
 
   return (
-    <div>
-      <div className="flex flex-col items-center mt-8">
+    <div className="h-screen p-8 custom-bg">
+      <div className="flex flex-col items-center">
         <Title />
         <SearchBar search={search} setSearch={setSearch} />
         <div className="mt-1 mb-5">
@@ -24,12 +24,14 @@ function Home() {
           />
           <OrderButton setBooksOrder={setBooksOrder} />
         </div>
-        <Books
-          search={search}
-          setGenres={setGenres}
-          selectedGenres={selectedGenres}
-          booksOrder={booksOrder}
-        />
+        <div className="p-4 rounded-lg shadow-xl bg-slate-200">
+          <Books
+            search={search}
+            setGenres={setGenres}
+            selectedGenres={selectedGenres}
+            booksOrder={booksOrder}
+          />
+        </div>
       </div>
     </div>
   );
