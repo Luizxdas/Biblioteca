@@ -4,16 +4,10 @@ import PropTypes from "prop-types";
 function FilterButton({ genres, selectedGenres = [], setSelectedGenres }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  {
-    /* Fecha/abre opções de gêneros. */
-  }
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
-  {
-    /* Checa se o gênero está marcado e insere na lista de marcados */
-  }
   const handleGenreChange = (event) => {
     const { value, checked } = event.target;
     let updatedGenres;
@@ -27,9 +21,6 @@ function FilterButton({ genres, selectedGenres = [], setSelectedGenres }) {
     setSelectedGenres(updatedGenres);
   };
 
-  {
-    /* Clicar fora da div de opções fecha ela. */
-  }
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!event.target.closest(".dropGenre")) {
@@ -47,12 +38,12 @@ function FilterButton({ genres, selectedGenres = [], setSelectedGenres }) {
     <div className="relative inline-block dropGenre">
       <button
         onClick={toggleDropdown}
-        className="bg-stone-300 text-gray-700 px-4 py-2 rounded-md focus:outline-none"
+        className="px-4 py-2 text-gray-700 rounded-md shadow-md bg-slate-200 focus:outline-none"
       >
         Gêneros
       </button>
       {isOpen && (
-        <div className="absolute mt-2 left-1/2 transform -translate-x-1/2 w-48 bg-stone-300 shadow-md rounded-md p-2">
+        <div className="absolute w-48 p-2 mt-2 transform -translate-x-1/2 rounded-md shadow-md left-1/2 bg-slate-200">
           {genres.map((genre) => (
             <div key={genre} className="flex items-center mb-2">
               <input

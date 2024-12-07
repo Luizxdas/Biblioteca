@@ -6,25 +6,25 @@ function SearchBar({ search, setSearch }) {
   };
 
   return (
-    <div className="text-center w-full mt-10">
-      <div className="relative w-1/3 min-w-80 mx-auto">
+    <div className="w-full mt-8 text-center">
+      <div className="relative w-1/3 mx-auto min-w-80">
         <input
           type="search"
           value={search}
           placeholder="Pesquise um título ou autor..."
           onChange={handleChange}
           aria-label="Search"
-          className="w-full h-9 rounded-lg pl-4 pr-10 bg-stone-300 brightness-85 text-xl"
+          className="w-full pl-4 pr-10 text-xl rounded-lg shadow-md h-9 bg-slate-200 brightness-85"
         />
         <button
           type="button"
-          className="absolute inset-y-0 right-2 flex items-center"
+          className="absolute inset-y-0 flex items-center right-2"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
             fill="currentColor"
-            className="h-6 w-6"
+            className="w-6 h-6"
           >
             <path
               fillRule="evenodd"
