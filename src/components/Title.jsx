@@ -1,6 +1,8 @@
 function Title() {
   return (
-    <h1 className="text-center font-medium text-5xl">BIBLIOTECA ONLINE</h1>
+    <a className="text-5xl font-medium text-center" href="/">
+      BIBLIOTECA ONLINE
+    </a>
   );
 }
 
