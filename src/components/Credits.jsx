@@ -51,10 +51,10 @@ function Credits() {
           ></div>
 
           {/* Modal */}
-          <div className="flex items-center justify-center h-screen">
+          <div className="flex items-center justify-center">
             <div
               ref={dropdownRef}
-              className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[20rem] md:w-[40rem] h-[35rem] bg-gray -400 z-20"
+              className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[20rem] md:w-[40rem] h-[26rem] bg-gray -400 z-20"
             >
               {credits ? (
                 <div className="flex flex-col justify-center w-full p-3 space-y-4 bg-gray-100">
