@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "http://localhost:8081",
+  baseURL: "https://biblioteca-255107438058.southamerica-east1.run.app",
 });
 
 export const fetchBooks = async () => {
